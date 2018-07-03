@@ -4,20 +4,22 @@ from os import listdir
 # put your code here
 
 def import_file_as_dictionary(filename):
+	file = open(filename,"r")
+
 	dictionary = {}
 
+	for line in file:
+		line = line.rstrip().split(":")
+		name = line[0]
+		score = line[1]
+		dictionary[name] = score
+	file.close()
 	return dictionary 
 
-file = open("scores.txt","r")
+#file = open("scores.txt","r")
 
 
-restaurant_scores_dict = {}
-
-for line in file:
-	line = line.rstrip().split(":")
-	name = line[0]
-	score = line[1]
-	restaurant_scores_dict[name] = score
+restaurant_scores_dict = import_file_as_dictionary("scores.txt")
 
 def validate_rating():
 	while True:
@@ -43,6 +45,8 @@ def update_restaurant_score(restaurant_scores_dict):
 		restaurant_scores_dict[name] = rating
 		return restaurant_scores_dict
 
+def change_dictionary():
+	pass
 
 def get_user_choice(restaurant_scores_dict):
 	"""Asks the user for a choice, and then calls various other functions
@@ -54,10 +58,11 @@ def get_user_choice(restaurant_scores_dict):
 		print("Current files Available:")
 		print(listdir(path='.'))
 		print("\n\
-			(V) View Ratings -- \
-			(A) Add New Restaurant -- \
-			(U) -- Update a Score -- \
-			(Q) -- Quit ")
+(V) View Ratings -- \
+(A) Add New Restaurant -- \
+(U) Update a Score -- \
+(C) Change Dictionaries\
+(Q) Quit ")
 		user_choice = input("Please select an option: ")
 		user_choice = user_choice[0].lower()
 		if user_choice == "v":
@@ -105,4 +110,3 @@ get_user_choice(restaurant_scores_dict)
 
 
 
-file.close()
