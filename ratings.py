@@ -27,14 +27,15 @@ def validate_rating():
 			return rating
 
 
-def update_restaurant_score():
+def update_restaurant_score(restaurant_scores_dict):
 	while True:
-		name = input("Please enter the name of the restaurant to update: ")
+		name = input("\nPlease enter the name of the restaurant to update: ")
 		if name not in restaurant_scores_dict.keys():
 			print("I haven't recorded that restaurant yet.")
 			continue
 		rating = validate_rating()
 		restaurant_scores_dict[name] = rating
+		return restaurant_scores_dict
 
 
 def get_user_choice(restaurant_scores_dict):
@@ -52,7 +53,7 @@ def get_user_choice(restaurant_scores_dict):
 		elif user_choice == "a":
 			restaurant_scores_dict = get_new_restaurant(restaurant_scores_dict)
 		elif user_choice == "u":
-			update_restaurant_score()
+			restaurant_scores_dict = update_restaurant_score(restaurant_scores_dict)
 
 		elif user_choice == "q":
 			break
