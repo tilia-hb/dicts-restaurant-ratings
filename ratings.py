@@ -38,6 +38,11 @@ def update_restaurant_score():
 
 
 def get_user_choice(restaurant_scores_dict):
+	"""Asks the user for a choice, and then calls various other functions
+
+	the input to the function is the restaurant scores dict
+
+	"""
 	while True:
 		print("\n(V) View Ratings -- (A) Add New Restaurant -- (U) -- Update a Score -- (Q) -- Quit ")
 		user_choice = input("Please select an option: ")
@@ -45,7 +50,7 @@ def get_user_choice(restaurant_scores_dict):
 		if user_choice == "v":
 			print_restaurant_scores(restaurant_scores_dict)
 		elif user_choice == "a":
-			return  get_new_restaurant(restaurant_scores_dict)
+			restaurant_scores_dict = get_new_restaurant(restaurant_scores_dict)
 		elif user_choice == "u":
 			update_restaurant_score()
 
@@ -79,7 +84,7 @@ def print_restaurant_scores(restaurant_scores_dict):
 
 #print_restaurant_scores(restaurant_scores_dict)
 
-restaurant_scores_dict = get_user_choice(restaurant_scores_dict)
+get_user_choice(restaurant_scores_dict)
 
 
 
