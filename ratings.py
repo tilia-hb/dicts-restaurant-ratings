@@ -1,6 +1,6 @@
 """Restaurant rating lister."""
 
-
+from os import listdir
 # put your code here
 file = open("scores.txt","r")
 
@@ -45,6 +45,8 @@ def get_user_choice(restaurant_scores_dict):
 
 	"""
 	while True:
+		print("Current files Available:")
+		print(listdir(path='.'))
 		print("\n(V) View Ratings -- (A) Add New Restaurant -- (U) -- Update a Score -- (Q) -- Quit ")
 		user_choice = input("Please select an option: ")
 		user_choice = user_choice[0].lower()
