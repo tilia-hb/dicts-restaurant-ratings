@@ -3,7 +3,13 @@
 from os import listdir
 # put your code here
 
+curr_directory = listdir(path='.')
+curr_directory = curr_directory[1:]
+
 def import_file_as_dictionary(filename):
+	"""gets a file name, and returns a dictionary of the content
+
+	"""
 	file = open(filename,"r")
 
 	dictionary = {}
@@ -16,12 +22,14 @@ def import_file_as_dictionary(filename):
 	file.close()
 	return dictionary 
 
-#file = open("scores.txt","r")
 
 
-restaurant_scores_dict = import_file_as_dictionary("scores.txt")
 
 def validate_rating():
+	"""asks the user for a restaurant rating, and returns a string, 1-5
+
+
+	"""
 	while True:
 		rating = input("What is the rating of the restaurant? ")
 
@@ -35,42 +43,54 @@ def validate_rating():
 			return rating
 
 
-def update_restaurant_score(restaurant_scores_dict):
+def update_restaurant_score(working_dictionary):
 	while True:
 		name = input("\nPlease enter the name of the restaurant to update: ")
-		if name not in restaurant_scores_dict.keys():
+		if name not in working_dictionary.keys():
 			print("I haven't recorded that restaurant yet.")
 			continue
 		rating = validate_rating()
-		restaurant_scores_dict[name] = rating
-		return restaurant_scores_dict
+		working_dictionary[name] = rating
+		return working_dictionary
 
-def change_dictionary():
-	pass
+def change_dictionary(working_dictionary):
+	print(curr_directory)
 
-def get_user_choice(restaurant_scores_dict):
+	filename = input("What file would you like to use? ")
+	if filename in curr_directory:
+		return import_file_as_dictionary(filename)
+	elif filename.lower()[0] == "q":
+		return working_dictionary		
+	else:
+		print("Please enter a valid filename or type (Q) Quit to return to the main menu. ")
+
+	
+
+def get_user_choice(working_dictionary):
 	"""Asks the user for a choice, and then calls various other functions
 
 	the input to the function is the restaurant scores dict
 
 	"""
+
 	while True:
 		print("Current files Available:")
-		print(listdir(path='.'))
 		print("\n\
 (V) View Ratings -- \
 (A) Add New Restaurant -- \
 (U) Update a Score -- \
-(C) Change Dictionaries\
+(C) Change Dictionaries -- \
 (Q) Quit ")
 		user_choice = input("Please select an option: ")
 		user_choice = user_choice[0].lower()
 		if user_choice == "v":
-			print_restaurant_scores(restaurant_scores_dict)
+			print_restaurant_scores(working_dictionary)
 		elif user_choice == "a":
-			restaurant_scores_dict = get_new_restaurant(restaurant_scores_dict)
+			working_dictionary = get_new_restaurant(working_dictionary)
 		elif user_choice == "u":
-			restaurant_scores_dict = update_restaurant_score(restaurant_scores_dict)
+			working_dictionary = update_restaurant_score(working_dictionary)
+		elif user_choice == "c":
+			working_dictionary = change_dictionary(working_dictionary)
 
 		elif user_choice == "q":
 			break
@@ -90,19 +110,18 @@ def get_new_restaurant(dct):
 #print (restaurant_list_sorted)
 
 
-def print_restaurant_scores(restaurant_scores_dict):
+def print_restaurant_scores(working_dictionary):
 
-#	restaurant_keys_sorted = list(restaurant_scores_dict.keys())
+#	restaurant_keys_sorted = list(working_dictionary.keys())
 #	restaurant_keys_sorted.sort()
 
-	for restaurant in sorted(restaurant_scores_dict.keys()):
-		print(restaurant + " is rated at " + restaurant_scores_dict[restaurant] + ".")
+	for restaurant in sorted(working_dictionary.keys()):
+		print(restaurant + " is rated at " + working_dictionary[restaurant] + ".")
 
-#restaurant_scores_dict = get_new_restaurant(restaurant_scores_dict)
 
-#print_restaurant_scores(restaurant_scores_dict)
+restaurant_scores_orig = import_file_as_dictionary("scores.txt")
 
-get_user_choice(restaurant_scores_dict)
+get_user_choice(restaurant_scores_orig)
 
 
 
